@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vector Tiles</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v5.2.0/css/ol.css" type="text/css">
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
+    <style>
+      #map {
+        background: #f8f4f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map = new ol.Map({
+        // maptiler.com base layer (free for evaluation)
+        layers: [
+          new ol.layer.VectorTile({
+            declutter: true,
+            source: new ol.source.VectorTile({
+              attributions: '© <a href="https://www.maptiler.com/license/maps/">MapTiler</a> ' +
+                '© <a href="https://www.openstreetmap.org/copyright">' +
+                'OpenStreetMap contributors</a>',
+              format: new ol.format.MVT(),
+              url: 'https://maps.tilehosting.com/data/v3/{z}/{x}/{y}.pbf?key=qSi3VgsnqyNvPZKLrUAV'
+            })
+          }),
+          // our pbf from server
+          new ol.layer.VectorTile({
+            source: new ol.source.VectorTile({
+              attributions: 'attribution here',
+              format: new ol.format.MVT(),
+              url: '/{z}/{x}/{y}.vector.pbf'
+            }),
+            style: new ol.style.Style({
+              fill: new ol.style.Fill({
+                color: 'rgba(255, 153, 0, 0.4)'
+              }),
+              stroke: new ol.style.Stroke({
+                color: 'rgba(255, 204, 0, 0.2)',
+                width: 2
+              })
+            })
+          })
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: [0, 0],
+          zoom: 2
+        })
+      });
+    </script>
+  </body>
+</html>
